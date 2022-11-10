@@ -52,12 +52,20 @@ const Animation = () => {
     const mesh = new THREE.Mesh(geometry, material);
     scene.add(mesh);
 
-    let direction = 1;
     /*그리기*/
+    const clock = new THREE.Clock();
+
+    let direction = 1;
     const draw = () => {
-      //각도는 radian값을 사용
-      // mesh.rotation.y += 0.1; // 360도 = 2파이, 0.1파이 = 13도
-      mesh.rotation.y += THREE.MathUtils.degToRad(1); //1도
+      /* 기기 성능에 따라 draw호출 횟수가 달라지기 때문에 성능을 맞춰주기 위해 절대값인 time을 활용해 성능을 보정한다.
+        성능이 안좋으면 호출이 더 적게 일어나는데, time값은 동일하니 time값을 활용한 animation 변화값은 동일하다.
+        대신 성능이 좋을수록 더 부드럽게 움직이며, 성능이 안좋으면 끊기는 움직임이 더 발생한다.
+      */
+      //절대값 사용
+      const time = clock.getElapsedTime(); //draw를 시작한 후 총 경과 시간(증가하는 값)
+      const delta = clock.getDelta(); //draw호출 사이의 간격 시간(일정한 값)
+
+      mesh.rotation.y = time; // === mesh.rotation.y += THREE.MathUtils.degToRad(1); //1도
       if (mesh.position.y > 2) direction *= -1;
       if (mesh.position.y < -2) direction *= -1;
       mesh.position.y += 0.01 * direction;
