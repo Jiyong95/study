@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
-import gsap from 'gsap';
+import Stats from 'stats.js';
 
 /*PerspectiveCamera : 원근감이 있는 카메라*/
 const Helper = () => {
@@ -43,7 +43,7 @@ const Helper = () => {
     /*AxesHelper: x,y,z축을 표시해줌*/
     const axesHelper = new THREE.AxesHelper(3);
     scene.add(axesHelper);
-
+    /*GridHelper: 격자를 표시해줌 */
     const gridHelper = new THREE.GridHelper(5);
     scene.add(gridHelper);
 
@@ -56,13 +56,17 @@ const Helper = () => {
     const mesh = new THREE.Mesh(geometry, material);
     mesh.position.x = 2;
     scene.add(mesh);
-
     camera.lookAt(mesh.position);
+
+    /*Stats*/
+    const stats = new Stats();
+    document.body.append(stats.dom);
 
     /*그리기*/
     const clock = new THREE.Clock();
 
     const draw = () => {
+      stats.update();
       const time = clock.getElapsedTime(); //draw를 시작한 후 총 경과 시간(증가하는 값)
       mesh.rotation.y = time;
       renderer.render(scene, camera);
