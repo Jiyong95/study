@@ -34,15 +34,21 @@ const PerspectiveCamera = () => {
       1000 // far
     );
 
-    camera.position.x = -1;
+    camera.position.x = 1;
     camera.position.y = 1;
     camera.position.z = 5;
+
+    /*조명 */
+    const light = new THREE.DirectionalLight(0xffffff, 1);
+    light.position.x = 1;
+    light.position.z = 2;
+    scene.add(light);
 
     /* Mesh(보여지는 사물)*/
     //모양
     const geometry = new THREE.BoxGeometry(1, 1, 1);
     //재질
-    const material = new THREE.MeshBasicMaterial({
+    const material = new THREE.MeshStandardMaterial({
       color: 'red',
     });
     const mesh = new THREE.Mesh(geometry, material);
