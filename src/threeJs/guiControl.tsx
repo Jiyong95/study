@@ -67,7 +67,7 @@ const GuiControl = () => {
     const draw = () => {
       stats.update();
       const time = clock.getElapsedTime(); //draw를 시작한 후 총 경과 시간(증가하는 값)
-      mesh.rotation.y = time;
+      mesh.rotation.set(0, time, 0);
       renderer.render(scene, camera);
       renderer.setAnimationLoop(draw); //위와 같은 함수.(WebXR = VR에서는 이 함수를 써야함)
     };
@@ -84,7 +84,7 @@ const GuiControl = () => {
 
     return () =>
       window.removeEventListener('resize', () => setSize(camera, window));
-  }, [canvasRef]);
+  }, []);
 
   return <canvas ref={canvasRef} />;
 };
