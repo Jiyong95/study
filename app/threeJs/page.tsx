@@ -1,3 +1,5 @@
+import Group from '@src/threeJs/group';
+
 export default function Page() {
-  return <div>hi</div>;
+  return <Group />;
 }
