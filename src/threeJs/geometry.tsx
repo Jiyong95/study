@@ -2,8 +2,8 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import dat from 'dat.gui';
-import { OrbitControls } from '@src/threeJs/utils/orbitControls';
-import { DragControls } from '@src/threeJs/utils/dragControls';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { DragControls } from 'three/examples/jsm/controls/DragControls';
 
 const Geometry = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
