@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import dat from 'dat.gui';
 import { OrbitControls } from '@src/threeJs/utils/orbitControls';
-import { FlyControls } from '@react-three/drei';
+import { DragControls } from '@src/threeJs/utils/dragControls';
 
 const Geometry = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -41,10 +41,6 @@ const Geometry = () => {
     directionalLight.position.z = 2;
     scene.add(directionalLight);
 
-    //orbitControl
-    const orbitCon = new OrbitControls(camera, renderer.domElement);
-    orbitCon.enableDamping = true; //컨트롤 부드럽게 적용(east-in-out느낌)
-
     // Mesh
     const geometry = new THREE.BoxGeometry(1, 1, 1);
     const material = new THREE.MeshStandardMaterial({
@@ -69,6 +65,17 @@ const Geometry = () => {
     group1.add(box1, group2);
     scene.add(group1);
 
+    /*
+    //orbitControl
+    const orbitCon = new OrbitControls(camera, renderer.domElement);
+    orbitCon.enableDamping = true; //컨트롤 부드럽게 적용(east-in-out느낌)
+*/
+    const dragCon = new DragControls(
+      [box1, box2, box3],
+      camera,
+      renderer.domElement
+    );
+
     // Dat GUI
     const gui = new dat.GUI();
     gui.add(camera.position, 'x', -5, 5, 0.1).name('카메라 X');
@@ -83,7 +90,7 @@ const Geometry = () => {
       group1.rotation.y = time;
       group2.rotation.y = time;
       group3.rotation.y = time;
-      orbitCon.update();
+      // orbitCon.update();
       renderer.render(scene, camera);
       renderer.setAnimationLoop(draw); //위와 같은 함수.(WebXR = VR에서는 이 함수를 써야함)
     };
