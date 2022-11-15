@@ -64,16 +64,7 @@ const KeyboardControl = () => {
 
     // Controls
     const controls = new PointerLockControls(camera, renderer.domElement);
-
-    controls.domElement.addEventListener('click', () => {
-      controls.lock();
-    });
-    controls.addEventListener('lock', () => {
-      console.log('lock!');
-    });
-    controls.addEventListener('unlock', () => {
-      console.log('unlock!');
-    });
+    controls.domElement.addEventListener('click', () => controls.lock());
 
     // 키보드 컨트롤
     const keyController = new KeyController();
@@ -126,8 +117,10 @@ const KeyboardControl = () => {
     };
     window.addEventListener('resize', () => setSize(camera, window));
 
-    return () =>
+    return () => {
       window.removeEventListener('resize', () => setSize(camera, window));
+      controls.domElement.removeEventListener('click', () => controls.lock());
+    };
   }, []);
 
   return <canvas ref={canvasRef} />;

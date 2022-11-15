@@ -1,7 +1,6 @@
 'use client';
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
-import Stats from 'stats.js';
 import dat from 'dat.gui';
 
 const Group = () => {
